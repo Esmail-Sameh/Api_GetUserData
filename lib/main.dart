@@ -47,8 +47,8 @@ class MyApp extends StatelessWidget {
   List<User> data = [];
 
   Future<List<User>> get_user_data() async {
-    var url =
-        await http.get(Uri.parse('https://jsonplaceholder.typicode.com/users'));
+    data.clear();
+    var url = await http.get(Uri.parse('https://jsonplaceholder.typicode.com/users'));
     var jesonData = await jsonDecode(url.body);
     for (var u in jesonData) {
       data.add(User(id: u['id'], name: u['name'], email: u['email']));
