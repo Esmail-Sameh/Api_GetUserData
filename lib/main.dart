@@ -1,11 +1,12 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:intg_api/user.dart';
 import 'package:http/http.dart' as http;
 
 void main() {
+
   runApp(MyApp());
+
 }
 
 class MyApp extends StatelessWidget {
@@ -25,18 +26,18 @@ class MyApp extends StatelessWidget {
             return ListView.builder(
               itemBuilder: (context, index) => ListTile(
                 title: Text(
-                  '${data[index].name}',
+                  '${userData[index].name}',
                   style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                 ),
                 leading: CircleAvatar(
-                  child: Text('${data[index].id}'),
+                  child: Text('${userData[index].id}'),
                 ),
                 subtitle: Text(
-                  '${data[index].email}',
+                  '${userData[index].email}',
                   style: TextStyle(color: Colors.grey, fontSize: 20),
                 ),
               ),
-              itemCount: data.length,
+              itemCount: userData.length,
             );
           },
         ),
@@ -44,15 +45,16 @@ class MyApp extends StatelessWidget {
     );
   }
 
-  List<User> data = [];
-
+  List<User> userData = [];
   Future<List<User>> get_user_data() async {
-    data.clear();
-    var url = await http.get(Uri.parse('https://jsonplaceholder.typicode.com/users'));
-    var jesonData = await jsonDecode(url.body);
-    for (var u in jesonData) {
-      data.add(User(id: u['id'], name: u['name'], email: u['email']));
+    userData.clear();
+    var userUrl = await http.get(Uri.parse('https://jsonplaceholder.typicode.com/users'));
+    var jesonUserData = await jsonDecode(userUrl.body);
+    
+    for (var u in jesonUserData) {
+      userData.add(User(id: u['id'], name: u['name'], email: u['email']));
     }
-    return data;
+    return userData;
   }
+
 }
